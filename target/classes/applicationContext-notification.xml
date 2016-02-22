@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="com.adms.notification" />
+	<context:annotation-config />
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="kampon8@gmail.com" />
+		<property name="password" value="xyP0orishk" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="templateMailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<!-- <property name="from" value="sender@gmail.com" /> <property name="to" 
+			value="receiver@gmail.com" /> -->
+		<property name="from" value="kampon8@gmail.com" />
+		<property name="to" value="kampon8@gmail.com" />
+		<property name="subject" value="Hello" />
+		<property name="text">
+			<value>
+        <![CDATA[
+           Dear %s,
+           Mail Content : %s
+        ]]>
+			</value>
+		</property>
+	</bean>
+
+	<bean id="velocityEngine"
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean"
+		p:resourceLoaderPath="classpath:/com/adms/velocity"
+		p:preferFileSystemAccess="false" />
+
+</beans>
